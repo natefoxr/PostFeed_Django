@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,8 +12,6 @@
 <body>
 
 <!-- component  is from https://tailwindcomponents.com/component/sidebar-navigation -->
-
-
 <div class="min-h-screen flex flex-row bg-gray-100">
     <div class="flex flex-col w-56 bg-white rounded-r-3xl overflow-hidden">
         <div class="flex items-center justify-center h-20 shadow-md">
@@ -26,6 +25,12 @@
                 </a>
             </li>
         {% if request.user.is_authenticated %}
+            <li>
+                <a href="{% url 'feed:new_post' %}" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bxs-message-add"></i></span>
+                <span class="text-sm font-medium">New Post</span>
+                </a>
+            </li>
             <li>
                 <a href="{% url 'account_logout' %}" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
                 <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-log-out"></i></span>
@@ -47,8 +52,41 @@
             {% block content %}{% endblock %}
         {% endblock %}
     </div>
-</div>
 
 
+{% if request.user.is_authenticated %}  
+    <!-- component from https://tailwindcomponents.com/component/notification-card -->
+    <div class="flex flex-col space-y-4 min-w-screen h-screen animated fadeIn faster  fixed  left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none focus:outline-none bg-gray-900 bg-opacity-70 hidden js-modal">
+        <div class="flex flex-col w-1/2 p-8 bg-white shadow-md hover:shodow-lg rounded-2xl">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center w-">
+                    <div class="flex flex-col ml-3">
+                        <div class="font-medium leading-none">New Post</div>
+                        <div class="text-sm text-gray-600 leading-none">
+                            {% comment %} #TODO Add the ajax form {% endcomment %}
+                            {% lorem 1 %}
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button class="bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500 hover:text-white shadow-md py-1 px-3 inline-flex items-center text-sm js-submit" type="button">
+                        <span class="mr-2">Create</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="currentcolor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+                        </svg>
+                    </button>
+                    <button class="bg-white text-gray-800 font-bold rounded border-b-2 border-red-500 hover:border-red-600 hover:bg-red-500 hover:text-white shadow-md py-1 px-3 inline-flex items-center text-sm js-close" type="button">
+                        <span class="mr-2">Close</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z"></path></svg>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}  
+
+
+<script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
