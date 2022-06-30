@@ -1,4 +1,3 @@
-from pathlib import PosixPath
 from django.contrib import admin
 from .models import Post
 
