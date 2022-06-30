@@ -1,7 +1,7 @@
 {% load thumbnail %}
  
  <!-- component from https://tailwindcomponents.com/component/post-article -->
-    <div class="max-w-4xl px-10 my-4 py-6 bg-white rounded-lg shadow-md">
+    <div class="w-full px-10 my-4 py-6 bg-white rounded-lg shadow-md">
         <div class="flex justify-between items-center">
             <span class="font-light text-gray-600">{{ post.date }}</span>
         </div>
@@ -17,8 +17,8 @@
                 <span>&nbsp;</span>
             {% endif %}
             <div>
-                {% comment %} #TODO add url here for profile view {% endcomment %}
-                <a class="flex items-center" href="#">
+                
+                <a class="flex items-center" href="{% url 'profiles:detail' post.author.username %}">
                     {% thumbnail post.author.profile.image "373x373" crop="center" as im %}
                         <img class="mx-4 w-10 h-10 object-cover rounded-full hidden sm:block" src="{{ im.url }}" alt="avatar">
                     {% endthumbnail %}
