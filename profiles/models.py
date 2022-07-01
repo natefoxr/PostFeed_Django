@@ -1,3 +1,4 @@
+from unittest.util import _MAX_LENGTH
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
@@ -12,6 +13,7 @@ class Profile(models.Model):
         related_name="profile"
     )
     image = ImageField(upload_to="profiles")
+    bio = models.CharField(max_length=140, blank=False, null=False)
 
     def __str__(self):
         return self.user.username
